@@ -16,9 +16,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<WorkerContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AutoServiceCS")));
 
-builder.Services.AddScoped<IWorkerService, WorkerServices>();
-builder.Services.AddScoped<IWorkerRepository,WorkerRepository>();
+builder.Services.AddTransient<IWorkerService, WorkerServices>();
+builder.Services.AddTransient<IWorkerRepository,WorkerRepository>();
 
+//ask sasko (GetAssemblies())
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WorkerShop.API.Models;
+using WorkerShop.Core.Exceptions;
 using WorkerShop.Core.Interfaces;
 
 namespace WorkerShop.API.Controllers
@@ -24,11 +25,15 @@ namespace WorkerShop.API.Controllers
             try
             {
                 await _workerService.RegisterWorkerAsync(worker);
-                return Ok();
+                return Created("Created successfuly", worker);
             }
-            catch(Exception ex)
+            catch(BadRequestException e)
             {
-
+                return BadRequest(e.Message);
+            }
+            catch(ConflictException ex)
+            {
+                return Conflict(ex.Message);
             }
        }
     }

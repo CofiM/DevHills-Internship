@@ -11,6 +11,7 @@ namespace WorkerShop.Repository.Entities
     public class Worker
     {
         [MaxLength(13)]
+        [RegularExpression("[0-9]{13}")]
         public string Id { get; set; }
 
 
@@ -45,8 +46,10 @@ namespace WorkerShop.Repository.Entities
 
         [Required,Range(1,9999.99)]
         public double DayRate { get; set; }
+        [Required]
+        public DateTime Created { get; set; }
 
-        public Worker(string id, string firstName, string lastName, string middleName, SexEnum sex, string city, string street, int buildingNumber, int? floorNumber, int apartmentNumber, double dayRate)
+        public Worker(string id, string firstName, string lastName, string middleName, SexEnum sex, string city, string street, int buildingNumber, int? floorNumber, int apartmentNumber, double dayRate, DateTime created)
         {
             Id = id;
             FirstName = firstName;
@@ -59,6 +62,7 @@ namespace WorkerShop.Repository.Entities
             FloorNumber = floorNumber;
             ApartmentNumber = apartmentNumber;
             DayRate = dayRate;
+            Created = created;
         }
 
     }

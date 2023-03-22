@@ -26,7 +26,9 @@ namespace WorkerShop.API.Models
 
         public double DayRate { get; set; }
 
-        public WorkerModel(string id, string firstName, string lastName, string middleName, SexEnum sex, string city, string street, int buildingNumber, int? floorNumber, int apartmentNumber, double dayRate)
+        public DateTime Created { get; set; }
+
+        public WorkerModel(string id, string firstName, string lastName, string middleName, SexEnum sex, string city, string street, int buildingNumber, int? floorNumber, int apartmentNumber, double dayRate, DateTime created)
         {
             Id = id;
             FirstName = firstName;
@@ -39,6 +41,7 @@ namespace WorkerShop.API.Models
             FloorNumber = floorNumber;
             ApartmentNumber = apartmentNumber;
             DayRate = dayRate;
+            Created = created;
         }
     }
 }

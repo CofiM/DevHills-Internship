@@ -6,6 +6,7 @@ using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WorkerShop.Core.Exceptions;
 using WorkerShop.Core.Models;
 using WorkerShop.Repository.DbContexts;
 using WorkerShop.Repository.Entities;
@@ -38,7 +39,10 @@ namespace WorkerShop.Repository.Implementation
             var workerEntity = mapper.Map<Worker>(worker);
             var check = await ExistsWorkerAsync(workerEntity.Id);
             if (check)
-                throw new Exception("Worker already exists!");
+            {
+                throw new ConflictException("Worker already exists!");
+            }
+            workerEntity.Created = DateTime.UtcNow;
             context.Workers.Add(workerEntity);
             await context.SaveChangesAsync();
             
