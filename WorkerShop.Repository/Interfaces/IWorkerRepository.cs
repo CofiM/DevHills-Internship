@@ -14,5 +14,9 @@ namespace WorkerShop.Repository.Interfaces
         Task<bool> ExistsWorkerAsync(string id);
 
         Task RegisterWorkerAsync(WorkerDTO worker);
+
+        Task<Worker> GetWorkerAsync(string id);
+
+        Task DeleteWorkerAsync(string id);
     }
 }

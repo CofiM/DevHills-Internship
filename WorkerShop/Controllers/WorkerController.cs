@@ -20,7 +20,8 @@ namespace WorkerShop.API.Controllers
         }
 
        [HttpPost]
-       public async Task<IActionResult> RegisterWorkerAsync(WorkerModel worker)
+       [Route("RegisterWorker")]
+        public async Task<IActionResult> RegisterWorkerAsync([FromBody]WorkerModel worker)
        {
             try
             {
@@ -36,5 +37,20 @@ namespace WorkerShop.API.Controllers
                 return Conflict(ex.Message);
             }
        }
+
+        [HttpDelete]
+        [Route("DeleteWorker/{id}")]
+        public async Task<IActionResult> DeleteWorkerAsync([FromRoute]string id)
+        {
+            try
+            {
+                await _workerService.UnregisterWorkerAsync(id);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

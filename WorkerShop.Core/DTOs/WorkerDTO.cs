@@ -23,7 +23,7 @@ namespace WorkerShop.Core.Models
             FloorNumber = floorNumber;
             ApartmentNumber = apartmentNumber;
             DayRate = dayRate;
-               Created = created;
+            Created = created;
         }
 
         public string Id { get; set; }

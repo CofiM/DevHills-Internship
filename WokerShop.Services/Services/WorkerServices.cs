@@ -26,6 +26,40 @@ namespace WokerShop.Services.Services
         public async Task RegisterWorkerAsync(WorkerModel worker)
         {
             var workerDTO = mapper.Map<WorkerDTO>(worker);
+
+            if (ValidateWorker(workerDTO))
+            {
+                await repository.RegisterWorkerAsync(workerDTO);
+            }
+        }
+
+        public async Task UnregisterWorkerAsync(string id)
+        {
+            if (ValidatePersonalId(id))
+            {
+                await repository.DeleteWorkerAsync(id);
+            }
+            else
+            {
+                throw new BadRequestException("Not valid id!");
+            }
+        }
+
+        public bool ValidatePersonalId(string id)
+        {
+            if(id.All(char.IsDigit) && id.Length == 13)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool ValidateWorker(WorkerDTO worker)
+        {
+            var workerDTO = mapper.Map<WorkerDTO>(worker);
             int lastDigits = int.Parse(workerDTO.Id.Substring(9, 3));
 
             if ((workerDTO.Sex == SexEnum.Male && lastDigits > 500) || (workerDTO.Sex == SexEnum.Female && lastDigits < 500))
@@ -40,7 +74,7 @@ namespace WokerShop.Services.Services
                 int fullYear = int.Parse('2' + year);
                 int day = int.Parse(workerDTO.Id.Substring(0, 2));
                 int month = int.Parse(workerDTO.Id.Substring(2, 2));
-                
+
                 DateTime date = new DateTime(fullYear, month, day);
 
                 //if worker date is later then limit date, it means that person is not yet 16. 
@@ -49,7 +83,7 @@ namespace WokerShop.Services.Services
                     throw new BadRequestException("Underaged.");
                 }
             }
-            await repository.RegisterWorkerAsync(workerDTO);
+            return true;
         }
     }
 }

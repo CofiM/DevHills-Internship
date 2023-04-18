@@ -11,6 +11,12 @@ namespace WorkerShop.Core.Interfaces
 {
     public interface IWorkerService
     {
-        Task RegisterWorkerAsync(WorkerModel worker); 
+        Task RegisterWorkerAsync(WorkerModel worker);
+
+        Task UnregisterWorkerAsync(string id);
+
+        bool ValidateWorker(WorkerDTO worker);
+
+        bool ValidatePersonalId(string id);
     }
 }
