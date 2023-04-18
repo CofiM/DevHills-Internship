@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WorkerShop.API.Models;
+using WorkerShop.Core.DTOs;
 using WorkerShop.Core.Enums;
 using WorkerShop.Core.Exceptions;
 using WorkerShop.Core.Interfaces;
@@ -23,6 +24,36 @@ namespace WokerShop.Services.Services
             this.mapper = mapper;
             this.repository = repository;
         }
+
+        public async Task<WorkerWithFullNameDto> GetWorkerAsync(string id)
+        {
+            if (!ValidatePersonalId(id)) 
+            {
+                throw new BadRequestException("Not valid id!");
+            }
+            var worker = await repository.GetWorkerAsync(id);
+            if (worker == null)
+            {
+                throw new BadRequestException("Worker does not exist!");
+            }
+            return mapper.Map<WorkerWithFullNameDto>(worker);
+        }
+
+        public async Task<List<WorkerWithFullNameDto>> GetWorkerListAsync()
+        {
+            var workers = await repository.GetAllWorkersAsync();
+            List<WorkerWithFullNameDto> workerList  = new List<WorkerWithFullNameDto>();
+            if(workers.Count == 0)
+            {
+                throw new BadRequestException("Workers do not exist");
+            }
+            foreach (var worker in workers) 
+            {
+                workerList.Add(mapper.Map<WorkerWithFullNameDto>(worker));
+            }
+            return workerList;
+        }
+
         public async Task RegisterWorkerAsync(WorkerModel worker)
         {
             var workerDTO = mapper.Map<WorkerDTO>(worker);

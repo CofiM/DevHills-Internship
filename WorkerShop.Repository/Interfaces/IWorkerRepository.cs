@@ -18,5 +18,7 @@ namespace WorkerShop.Repository.Interfaces
         Task<Worker> GetWorkerAsync(string id);
 
         Task DeleteWorkerAsync(string id);
+
+        Task<List<Worker>> GetAllWorkersAsync();
     }
 }

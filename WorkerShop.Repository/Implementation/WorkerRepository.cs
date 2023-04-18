@@ -27,12 +27,12 @@ namespace WorkerShop.Repository.Implementation
 
         public async Task DeleteWorkerAsync(string id)
         {
-            var worker = await context.Workers.Where(p => p.Id == id && p.IsDeleted == false).FirstOrDefaultAsync();
+            var worker = await context.Workers.Where(p => p.Id == id && p.IsActive == true).FirstOrDefaultAsync();
             if (worker == null)
             {
                 throw new BadRequestException("Worker doesn't exists!");
             }
-            worker.IsDeleted = true;
+            worker.IsActive = false;
             worker.DeletedOn = DateTimeOffset.UtcNow;
             await context.SaveChangesAsync();
         }
@@ -44,6 +44,11 @@ namespace WorkerShop.Repository.Implementation
                 return false;
             else
                 return true;
+        }
+
+        public async Task<List<Worker>> GetAllWorkersAsync()
+        {
+            return await context.Workers.ToListAsync();
         }
 
         public async Task<Worker> GetWorkerAsync(string id)
@@ -60,7 +65,7 @@ namespace WorkerShop.Repository.Implementation
                 throw new ConflictException("Worker already exists!");
             }
             workerEntity.Created = DateTime.UtcNow;
-            workerEntity.IsDeleted = false;
+            workerEntity.IsActive = true;
             context.Workers.Add(workerEntity);
             await context.SaveChangesAsync();
         }

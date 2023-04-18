@@ -52,5 +52,35 @@ namespace WorkerShop.API.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet]
+        [Route("GetWorker/{id}")]
+        public async Task<IActionResult> GetWorkerAsync([FromRoute] string id)
+        {
+            try
+            {
+                var worker = await _workerService.GetWorkerAsync(id);
+                return Ok(worker);
+            }
+            catch(Exception e) 
+            { 
+                return BadRequest(e.Message);  
+            }
+        }
+
+        [HttpGet]
+        [Route("GetWorkerList")]
+        public async Task<IActionResult> GetWorkerListAsync()
+        {
+            try
+            {
+                var workerList = await _workerService.GetWorkerListAsync();
+                return Ok(workerList);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

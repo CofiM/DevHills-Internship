@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using WorkerShop.API.Models;
+using WorkerShop.Core.DTOs;
 using WorkerShop.Core.Models;
 using WorkerShop.Repository.Entities;
 
@@ -14,6 +15,7 @@ namespace WorkerShop.API.Mappers
             CreateMap<WorkerDTO, Worker>();
             CreateMap<Worker, WorkerDTO>();
             CreateMap<WorkerDTO, WorkerModel>();
+            CreateMap<Worker, WorkerWithFullNameDto>();
         }
     }
 }

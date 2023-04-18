@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WorkerShop.API.Models;
+using WorkerShop.Core.DTOs;
 using WorkerShop.Core.Enums;
 using WorkerShop.Core.Models;
 
@@ -18,5 +19,9 @@ namespace WorkerShop.Core.Interfaces
         bool ValidateWorker(WorkerDTO worker);
 
         bool ValidatePersonalId(string id);
+
+        Task<WorkerWithFullNameDto> GetWorkerAsync(string id);
+
+        Task<List<WorkerWithFullNameDto>> GetWorkerListAsync();
     }
 }
