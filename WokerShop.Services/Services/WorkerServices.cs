@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WorkerShop.API.Models;
+using WorkerShop.Core.Enums;
 using WorkerShop.Core.Exceptions;
 using WorkerShop.Core.Interfaces;
 using WorkerShop.Core.Models;
@@ -27,7 +28,7 @@ namespace WokerShop.Services.Services
             var workerDTO = mapper.Map<WorkerDTO>(worker);
             int lastDigits = int.Parse(workerDTO.Id.Substring(9, 3));
 
-            if ((workerDTO.Sex.ToString().Equals("Male") && lastDigits > 500) || (workerDTO.Sex.ToString().Equals("Female") && lastDigits < 500))
+            if ((workerDTO.Sex == SexEnum.Male && lastDigits > 500) || (workerDTO.Sex == SexEnum.Female && lastDigits < 500))
             {
                 throw new BadRequestException("Not valid personalId");
             }
@@ -42,8 +43,8 @@ namespace WokerShop.Services.Services
                 
                 DateTime date = new DateTime(fullYear, month, day);
 
-                //if worker date is later then limit date, it means that person is not yet 18. 
-                if (DateTime.Today.AddYears(-18) < date)
+                //if worker date is later then limit date, it means that person is not yet 16. 
+                if (DateTime.Today.AddYears(-16) < date)
                 {
                     throw new BadRequestException("Underaged.");
                 }
