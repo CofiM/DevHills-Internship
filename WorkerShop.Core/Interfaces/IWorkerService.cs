@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,5 +24,9 @@ namespace WorkerShop.Core.Interfaces
         Task<WorkerWithFullNameDto> GetWorkerAsync(string id);
 
         Task<List<WorkerWithFullNameDto>> GetWorkerListAsync();
+
+        Task<StatusCodeEnum> CreateOrUpdateWorker(string id, WorkerDTO worker);
+
+        Task PatchWorkerAsync(PatchWorkerDto workerPatch, string id);
     }
 }

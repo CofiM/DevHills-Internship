@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,24 @@ namespace WokerShop.Services.Services
         {
             this.mapper = mapper;
             this.repository = repository;
+        }
+
+        public async Task<StatusCodeEnum> CreateOrUpdateWorker(string id, WorkerDTO worker)
+        {
+            if (id != worker.Id)
+            {
+                throw new ConflictException("Not matching ids!");
+            }
+            if (ValidateWorker(worker));
+            {
+                if (await repository.ExistsWorkerAsync(id))
+                {
+                    await repository.UpdateWorkerAsync(id, worker);
+                    return StatusCodeEnum.Ok;
+                }
+                await repository.RegisterWorkerAsync(worker);
+                return StatusCodeEnum.Created;
+            }
         }
 
         public async Task<WorkerWithFullNameDto> GetWorkerAsync(string id)
@@ -52,6 +71,11 @@ namespace WokerShop.Services.Services
                 workerList.Add(mapper.Map<WorkerWithFullNameDto>(worker));
             }
             return workerList;
+        }
+
+        public async Task PatchWorkerAsync(PatchWorkerDto workerPatch, string id)
+        {
+            await repository.PartiallyUpdateWorker(workerPatch, id);
         }
 
         public async Task RegisterWorkerAsync(WorkerModel worker)
@@ -117,4 +141,5 @@ namespace WokerShop.Services.Services
             return true;
         }
     }
+
 }

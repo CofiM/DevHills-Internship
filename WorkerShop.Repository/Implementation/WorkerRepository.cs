@@ -6,6 +6,7 @@ using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WorkerShop.Core.DTOs;
 using WorkerShop.Core.Exceptions;
 using WorkerShop.Core.Models;
 using WorkerShop.Repository.DbContexts;
@@ -39,7 +40,7 @@ namespace WorkerShop.Repository.Implementation
 
         public async Task<bool> ExistsWorkerAsync(string id)
         {
-            var worker = await context.Workers.Where(p => p.Id == id).FirstOrDefaultAsync();
+            var worker = await context.Workers.Where(p => p.Id == id).AsNoTracking().FirstOrDefaultAsync();
             if (worker == null)
                 return false;
             else
@@ -56,6 +57,13 @@ namespace WorkerShop.Repository.Implementation
             return await context.Workers.Where(p => p.Id == id).FirstOrDefaultAsync();
         }
 
+        public async Task PartiallyUpdateWorker(PatchWorkerDto workerPatch, string id)
+        {
+            var worker = await context.Workers.Where(p => p.Id == id).FirstOrDefaultAsync();
+            mapper.Map(workerPatch,worker);
+            await context.SaveChangesAsync();
+        }
+
         public async Task RegisterWorkerAsync(WorkerDTO worker)
         {
             var workerEntity = mapper.Map<Worker>(worker);
@@ -66,7 +74,17 @@ namespace WorkerShop.Repository.Implementation
             }
             workerEntity.Created = DateTime.UtcNow;
             workerEntity.IsActive = true;
+            //how to make it work with constructor with args, because it returns default values when using constructor with args.Check worker entity constructor and 67-68 lines.
             context.Workers.Add(workerEntity);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task UpdateWorkerAsync(string id, WorkerDTO workerDto)
+        {
+            //had problem for tracking, used AsNoTracking, maybe good topic for discussion  
+            Worker workerMapped = mapper.Map<Worker>(workerDto);
+            workerMapped.LastModifiedOn = DateTimeOffset.UtcNow;
+            context.Workers.Update(workerMapped);
             await context.SaveChangesAsync();
         }
     }

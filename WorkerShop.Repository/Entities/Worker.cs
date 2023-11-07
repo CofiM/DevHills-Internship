@@ -51,7 +51,8 @@ namespace WorkerShop.Repository.Entities
         [Required]
         public  bool IsActive { get; set; }
         public DateTimeOffset? DeletedOn { get; set; }
-        public Worker(string id, string firstName, string lastName, string middleName, SexEnum sex, string city, string street, int buildingNumber, int? floorNumber, int apartmentNumber, double dayRate, DateTime created, bool isActive, DateTimeOffset? deletedOn)
+        public DateTimeOffset? LastModifiedOn { get; set; }
+        public Worker(string id, string firstName, string lastName, string middleName, SexEnum sex, string city, string street, int buildingNumber, int? floorNumber, int apartmentNumber, double dayRate,   DateTimeOffset? deletedOn, DateTimeOffset? lastModifiedOn)
         {
             Id = id;
             FirstName = firstName;
@@ -64,10 +65,11 @@ namespace WorkerShop.Repository.Entities
             FloorNumber = floorNumber;
             ApartmentNumber = apartmentNumber;
             DayRate = dayRate;
-            Created = created;
-            IsActive = isActive;
+            Created = DateTime.UtcNow;
+            IsActive = true;
             DeletedOn = deletedOn;
+            LastModifiedOn = lastModifiedOn;
         }
-
+        public Worker() { }
     }
 }

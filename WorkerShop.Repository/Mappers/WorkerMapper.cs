@@ -16,6 +16,7 @@ namespace WorkerShop.API.Mappers
             CreateMap<Worker, WorkerDTO>();
             CreateMap<WorkerDTO, WorkerModel>();
             CreateMap<Worker, WorkerWithFullNameDto>();
+            CreateMap<Worker, PatchWorkerDto>();
         }
     }
 }
