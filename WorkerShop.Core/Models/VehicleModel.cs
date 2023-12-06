@@ -29,6 +29,9 @@ namespace WorkerShop.Core.Models
         [Required]
         public PowerEnum PowerEnum { get; set; }
 
+        //pitanje dal treba 
+       public ClientModel Client { get; set; }
+
         public VehicleModel(string vIN, int manufacturingYear, string? licensePlate, int engineDisplacement, int power, PowerEnum powerEnum)
         {
             VIN = vIN;

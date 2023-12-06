@@ -12,5 +12,9 @@ namespace WorkerShop.Repository.Interfaces
         Task RegisterClientAsync(ClientDTO client);
 
         Task<bool> CheckClientAsync(string id);
+
+        Task<bool> CheckVehicleAsync(string id);
+
+        Task UpdateClientAsync(ClientDTO client);
     }
 }

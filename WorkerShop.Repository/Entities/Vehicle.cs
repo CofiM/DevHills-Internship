@@ -27,5 +27,7 @@ namespace WorkerShop.Repository.Entities
         [Required,Range(1,9999)]
         public int Power { get; set;}
 
+        public Client Client { get; set; }
+
     }
 }

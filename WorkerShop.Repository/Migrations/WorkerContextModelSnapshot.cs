@@ -88,6 +88,7 @@ namespace WorkerShop.Repository.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ClientId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(13)");
 
                     b.Property<int>("EngineDisplacement")
@@ -174,9 +175,13 @@ namespace WorkerShop.Repository.Migrations
 
             modelBuilder.Entity("WorkerShop.Repository.Entities.Vehicle", b =>
                 {
-                    b.HasOne("WorkerShop.Repository.Entities.Client", null)
+                    b.HasOne("WorkerShop.Repository.Entities.Client", "Client")
                         .WithMany("Vehicles")
-                        .HasForeignKey("ClientId");
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("WorkerShop.Repository.Entities.Client", b =>

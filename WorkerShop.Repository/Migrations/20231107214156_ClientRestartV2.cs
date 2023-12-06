@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WorkerShop.Repository.Migrations
 {
     /// <inheritdoc />
-    public partial class ClientRestart : Migration
+    public partial class ClientRestartV2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -69,7 +69,7 @@ namespace WorkerShop.Repository.Migrations
                     LicensePlate = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EngineDisplacement = table.Column<int>(type: "int", nullable: false),
                     Power = table.Column<int>(type: "int", nullable: false),
-                    ClientId = table.Column<string>(type: "nvarchar(13)", nullable: true)
+                    ClientId = table.Column<string>(type: "nvarchar(13)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -78,7 +78,8 @@ namespace WorkerShop.Repository.Migrations
                         name: "FK_Vehicles_Clients_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Clients",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

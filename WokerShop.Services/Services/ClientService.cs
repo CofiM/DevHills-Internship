@@ -27,6 +27,21 @@ namespace WokerShop.Services.Services
             this.repository = repository;
         }
 
+        public async Task<StatusCodeEnum> CreateOrUpdateClient(string id, ClientDTO client)
+        {
+            if(client.Id != id)
+            {
+                throw new BadRequestException("Not matching ids!");
+            }
+            int lastDigits = int.Parse(client.Id.Substring(9, 3));
+            if ((client.Sex == SexEnum.Male && lastDigits > 500) || (client.Sex == SexEnum.Female && lastDigits < 500))
+            {
+                throw new BadRequestException("Not valid personalId");
+            }
+            bool check = false;
+            return StatusCodeEnum.Ok;
+        }
+
         public async Task RegisterClientAsync(ClientModel client)
         {
             var clientDTO = mapper.Map<ClientDTO>(client);
