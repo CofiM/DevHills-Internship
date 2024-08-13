@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorkerShop.Repository.DbContexts;
 
@@ -11,9 +12,11 @@ using WorkerShop.Repository.DbContexts;
 namespace WorkerShop.Repository.Migrations
 {
     [DbContext(typeof(WorkerContext))]
-    partial class WorkerContextModelSnapshot : ModelSnapshot
+    [Migration("20240813114535_AuditLogs")]
+    partial class AuditLogs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,9 +151,6 @@ namespace WorkerShop.Repository.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTimeOffset?>("CompletedAt")
-                        .HasColumnType("datetimeoffset");
-
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
@@ -181,17 +181,14 @@ namespace WorkerShop.Repository.Migrations
                     b.Property<string>("VehicleVIN")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("WorkNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WorkerId")
+                    b.Property<string>("workerId")
                         .HasColumnType("nvarchar(13)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("VehicleVIN");
 
-                    b.HasIndex("WorkerId");
+                    b.HasIndex("workerId");
 
                     b.ToTable("WorkOrders");
                 });
@@ -276,13 +273,13 @@ namespace WorkerShop.Repository.Migrations
                         .WithMany("WorkOrders")
                         .HasForeignKey("VehicleVIN");
 
-                    b.HasOne("WorkerShop.Repository.Entities.Worker", "Worker")
+                    b.HasOne("WorkerShop.Repository.Entities.Worker", "worker")
                         .WithMany("WorkOrders")
-                        .HasForeignKey("WorkerId");
+                        .HasForeignKey("workerId");
 
                     b.Navigation("Vehicle");
 
-                    b.Navigation("Worker");
+                    b.Navigation("worker");
                 });
 
             modelBuilder.Entity("WorkerShop.Repository.Entities.Client", b =>

@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using WorkerShop.Core.Enums;
 
-namespace WorkerShop.Core.Models
+namespace WorkerShop.Core.DTOs
 {
-    public class ClientModel
+    public class PatchClientDTO
     {
         [Required, MaxLength(13)]
         [RegularExpression("[0-9]{13}")]
@@ -43,8 +42,6 @@ namespace WorkerShop.Core.Models
         [EmailAddress]
         public string Email { get; set; }
 
-        public List<VehicleModel> Vehicles { get; set; }
-
-      
+        public List<VehicleDTO> Vehicles { get; set; }
     }
 }

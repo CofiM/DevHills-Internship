@@ -15,10 +15,29 @@ namespace WorkerShop.Repository.Mappers
     {
         public ClientMapper() 
         {
+            //overall api
             CreateMap<ClientModel, ClientDTO>()
                 .ForMember(dest => dest.Vehicles, temp => temp.MapFrom(src => src.Vehicles));
             CreateMap<ClientDTO, Client>()
                 .ForMember(dest => dest.Vehicles, temp => temp.MapFrom(src => src.Vehicles));
+
+            //restricting one to many
+            CreateMap<ClientModel, ClientWithoutVehiclesDTO>();
+            CreateMap<ClientWithoutVehiclesDTO, Client>()
+                .ForMember(dest => dest.Vehicles, opt => opt.Ignore());
+
+            //patch
+            CreateMap<PatchClientDTO, Client>()
+                .ForMember(dest => dest.Vehicles, opt => opt.Ignore());
+            CreateMap<Client, PatchClientDTO>();
+
+            //adding address property
+            CreateMap<Client,ClientWithAdressDto>()
+                .ForMember(dest => dest.Address, opt => opt.MapFrom(src =>
+                                                   src.ApartmentNumber.HasValue
+                                                   ? $"{src.Street} {src.BuildingNumber}/{src.ApartmentNumber}, {src.City}"
+                                                   : $"{src.Street} {src.BuildingNumber}, {src.City}"));
+
         }
     }
 }

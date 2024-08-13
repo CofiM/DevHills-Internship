@@ -18,9 +18,9 @@ namespace WokerShop.Services.Services
     public class WorkerServices : IWorkerService
     {
         private readonly IMapper mapper;
-        private readonly IWorkerRepository repository;
+        private readonly IWokOrderRepository repository;
 
-        public WorkerServices(IMapper mapper, IWorkerRepository repository)
+        public WorkerServices(IMapper mapper, IWokOrderRepository repository)
         {
             this.mapper = mapper;
             this.repository = repository;

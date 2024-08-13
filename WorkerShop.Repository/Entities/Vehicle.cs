@@ -29,5 +29,7 @@ namespace WorkerShop.Repository.Entities
 
         public Client Client { get; set; }
 
+        public List<WorkOrder> WorkOrders { get; set; }
+
     }
 }

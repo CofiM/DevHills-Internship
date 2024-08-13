@@ -54,6 +54,18 @@ namespace WorkerShop.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Soft deletes worker in database.
+        /// </summary>
+        /// <param>
+        /// Id of worker to be deleted.
+        /// ></param>
+        /// <returns>
+        /// Return message that it is successfuly soft deleted.
+        /// </returns>
+        ///<response code="201">Returns structure of worker model that was added beforehand</response>
+        ///<response code="400">There is some error in arguments</response>
+        ///<response code="409">Worker already exists in database</response>
         [HttpDelete]
         [Route("DeleteWorker/{id}")]
         public async Task<IActionResult> DeleteWorkerAsync([FromRoute] string id)
@@ -69,6 +81,17 @@ namespace WorkerShop.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Return asked worker.
+        /// </summary>
+        /// <param>
+        /// Id of worker
+        /// </param>
+        /// <returns>
+        /// Return worked dto.
+        /// </returns>
+        ///<response code="200">Returns structure of worker model that was added beforehand</response>
+        ///<response code="400">There is some error in arguments</response>
         [HttpGet]
         [Route("GetWorker/{id}")]
         public async Task<IActionResult> GetWorkerAsync([FromRoute] string id)
@@ -84,6 +107,14 @@ namespace WorkerShop.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Returns all workers.
+        /// </summary
+        /// <returns>
+        /// List of all workers.
+        /// </returns>
+        ///<response code="200">Client gets list of workers</response>
+        ///<response code="400">There is some error in arguments</response>
         [HttpGet]
         [Route("GetWorkerList")]
         public async Task<IActionResult> GetWorkerListAsync()
@@ -98,6 +129,19 @@ namespace WorkerShop.API.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        /// <summary>
+        /// Creates or updates worker depending if he is already in database.
+        /// </summary>
+        /// <param>
+        /// Id of worker and properties to be modified or added.
+        /// </param>
+        /// <returns>
+        /// Return simple message.
+        /// </returns>
+        ///<response code="200">Worker is updated.</response>
+        ///<response code="201">Worker is added.</response>
+        ///<response code="400">There is some error in arguments</response>
         [HttpPut]
         [Route("CreateOrUpdateWorker/{id}")]
         public async Task<IActionResult> CreateOrUpdateWorker([FromRoute] string id, [FromBody] WorkerModel worker)
@@ -122,6 +166,18 @@ namespace WorkerShop.API.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        /// <summary>
+        ///Updates worker depending if he is already in database.
+        /// </summary>
+        /// <param>
+        /// Id of worker and properties in json patch to be modified or added.
+        /// </param>
+        /// <returns>
+        /// Return simple message.
+        /// </returns>
+        ///<response code="200">Worker is updated.</response>
+        ///<response code="400">There is some error in arguments</response>
         [HttpPatch]
         [Route("PartiallyUpdateWorker/{id}")]
         public async Task<IActionResult> PartiallyUpdateWorker([FromRoute] string id, JsonPatchDocument<PatchWorkerDto> patch)
@@ -133,7 +189,7 @@ namespace WorkerShop.API.Controllers
                 {
                     throw new BadRequestException("Workere does not exist");
                 }
-                var workerPatch = mapper.Map<PatchWorkerDto>(worker);
+                var workerPatch = mapper.Map<PatchWorkerDto>(worker); 
                 patch.ApplyTo(workerPatch,ModelState);
                 if(!ModelState.IsValid)
                 {

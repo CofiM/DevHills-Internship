@@ -34,9 +34,12 @@ builder.Services.AddSwaggerGen(options => {
 builder.Services.AddDbContext<WorkerContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AutoServiceCS")));
 
 builder.Services.AddTransient<IWorkerService, WorkerServices>();
-builder.Services.AddTransient<IWorkerRepository,WorkerRepository>();
+builder.Services.AddTransient<IWokOrderRepository,WorkerRepository>();
 builder.Services.AddTransient<IClientRepository, ClientRepository>();
 builder.Services.AddTransient<IClientService, ClientService>();
+builder.Services.AddTransient<IWorkOrderRepository, WorkOrderRepository>();
+builder.Services.AddTransient<IWorkOrderService, WorkOrderService>();   
+
 
 //ask sasko (GetAssemblies())
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WorkerShop.Core.DTOs;
+using WorkerShop.Core.Enums;
+using WorkerShop.Repository.Entities;
 
 namespace WorkerShop.Repository.Interfaces
 {
@@ -15,6 +17,16 @@ namespace WorkerShop.Repository.Interfaces
 
         Task<bool> CheckVehicleAsync(string id);
 
-        Task UpdateClientAsync(ClientDTO client);
+        Task UpdateClientAsync(ClientWithoutVehiclesDTO client);
+
+        Task PartiallyUpdateClientAsync(PatchClientDTO apiClient);
+
+        Task<Client> GetClientAsync(string id);
+
+        Task RemoveClientAsync (string id);
+
+        Task<ClientPageDto> GetAllClients(int pageSize, int pageNumber, OrderByEnum order);
+
+
     }
 }

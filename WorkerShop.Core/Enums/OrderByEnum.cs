@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace WorkerShop.Core.Enums
 {
-    public enum StatusCodeEnum
+    public enum OrderByEnum
     {
         None = 0,
-        Created = 201,
-        Ok = 200,
-        Denied = 404,
-        Bad = 400,
-        NoContent = 204,
+        FirstName = 1,
+        LastName = 2,
+        CreateDate = 3,
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -29,17 +30,5 @@ namespace WorkerShop.Core.Models
         [Required]
         public PowerEnum PowerEnum { get; set; }
 
-        //pitanje dal treba 
-       public ClientModel Client { get; set; }
-
-        public VehicleModel(string vIN, int manufacturingYear, string? licensePlate, int engineDisplacement, int power, PowerEnum powerEnum)
-        {
-            VIN = vIN;
-            ManufacturingYear = manufacturingYear;
-            LicensePlate = licensePlate;
-            EngineDisplacement = engineDisplacement;
-            Power = power;
-            PowerEnum   = powerEnum;
-        }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorkerShop.Repository.DbContexts;
 
@@ -11,9 +12,11 @@ using WorkerShop.Repository.DbContexts;
 namespace WorkerShop.Repository.Migrations
 {
     [DbContext(typeof(WorkerContext))]
-    partial class WorkerContextModelSnapshot : ModelSnapshot
+    [Migration("20240805111953_WorkOrderGuid")]
+    partial class WorkOrderGuid
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,34 +24,6 @@ namespace WorkerShop.Repository.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("WorkerShop.Repository.Entities.AuditLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Action")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Changes")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EntityName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("TimeStamp")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AuditLogs");
-                });
 
             modelBuilder.Entity("WorkerShop.Repository.Entities.Client", b =>
                 {
@@ -148,27 +123,12 @@ namespace WorkerShop.Repository.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTimeOffset?>("CompletedAt")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTimeOffset?>("DeletedOn")
-                        .HasColumnType("datetimeoffset");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("FuelLevel")
                         .HasColumnType("real");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LastModifiedOn")
-                        .HasColumnType("datetimeoffset");
 
                     b.Property<int>("Milleage")
                         .HasColumnType("int");
@@ -178,20 +138,7 @@ namespace WorkerShop.Repository.Migrations
                         .HasMaxLength(17)
                         .HasColumnType("nvarchar(17)");
 
-                    b.Property<string>("VehicleVIN")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("WorkNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WorkerId")
-                        .HasColumnType("nvarchar(13)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("VehicleVIN");
-
-                    b.HasIndex("WorkerId");
 
                     b.ToTable("WorkOrders");
                 });
@@ -270,34 +217,9 @@ namespace WorkerShop.Repository.Migrations
                     b.Navigation("Client");
                 });
 
-            modelBuilder.Entity("WorkerShop.Repository.Entities.WorkOrder", b =>
-                {
-                    b.HasOne("WorkerShop.Repository.Entities.Vehicle", "Vehicle")
-                        .WithMany("WorkOrders")
-                        .HasForeignKey("VehicleVIN");
-
-                    b.HasOne("WorkerShop.Repository.Entities.Worker", "Worker")
-                        .WithMany("WorkOrders")
-                        .HasForeignKey("WorkerId");
-
-                    b.Navigation("Vehicle");
-
-                    b.Navigation("Worker");
-                });
-
             modelBuilder.Entity("WorkerShop.Repository.Entities.Client", b =>
                 {
                     b.Navigation("Vehicles");
-                });
-
-            modelBuilder.Entity("WorkerShop.Repository.Entities.Vehicle", b =>
-                {
-                    b.Navigation("WorkOrders");
-                });
-
-            modelBuilder.Entity("WorkerShop.Repository.Entities.Worker", b =>
-                {
-                    b.Navigation("WorkOrders");
                 });
 #pragma warning restore 612, 618
         }

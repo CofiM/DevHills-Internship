@@ -52,6 +52,8 @@ namespace WorkerShop.Repository.Entities
         public  bool IsActive { get; set; }
         public DateTimeOffset? DeletedOn { get; set; }
         public DateTimeOffset? LastModifiedOn { get; set; }
+
+        public List<WorkOrder> WorkOrders { get; set; } 
         public Worker(string id, string firstName, string lastName, string middleName, SexEnum sex, string city, string street, int buildingNumber, int? floorNumber, int apartmentNumber, double dayRate,   DateTimeOffset? deletedOn, DateTimeOffset? lastModifiedOn)
         {
             Id = id;

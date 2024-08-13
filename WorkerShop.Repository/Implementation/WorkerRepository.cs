@@ -15,7 +15,7 @@ using WorkerShop.Repository.Interfaces;
 
 namespace WorkerShop.Repository.Implementation
 {
-    public class WorkerRepository : IWorkerRepository
+    public class WorkerRepository : IWokOrderRepository
     {
         private readonly WorkerContext context;
         private readonly IMapper mapper;    
@@ -87,5 +87,6 @@ namespace WorkerShop.Repository.Implementation
             context.Workers.Update(workerMapped);
             await context.SaveChangesAsync();
         }
+
     }
 }

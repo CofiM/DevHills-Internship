@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,8 +12,16 @@ namespace WorkerShop.Core.Interfaces
 {
     public interface IClientService
     {
-        Task RegisterClientAsync(ClientModel client);
+        Task<StatusCodeEnum> RegisterClientAsync(ClientModel client);
 
-        Task<StatusCodeEnum> CreateOrUpdateClient(string id, ClientDTO client);
+        Task<StatusCodeEnum> CreateOrUpdateClient(string id, ClientModel client);
+
+        Task<StatusCodeEnum> PartiallyUpdateClient(string id, JsonPatchDocument<PatchClientDTO> client);
+
+        Task<StatusCodeEnum> RemoveClientAsync(string id);
+
+        Task<ClientWithAdressDto> GetClientAsync(string id);
+
+        Task<ClientPageDto> GetAllClients(int pageSize, int pageNumber, OrderByEnum order);
     }
 }

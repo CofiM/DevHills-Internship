@@ -10,7 +10,7 @@ using WorkerShop.Repository.Entities;
 
 namespace WorkerShop.Repository.Interfaces
 {
-    public interface IWorkerRepository
+    public interface IWokOrderRepository
     {
         Task<bool> ExistsWorkerAsync(string id);
 

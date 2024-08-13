@@ -18,6 +18,7 @@ namespace WorkerShop.Repository.Mappers
                 .ForMember(dest => dest.Power, temp =>
                 temp.MapFrom(src => src.PowerEnum == Core.Enums.PowerEnum.BHP ? src.Power/1.341 : src.Power));
             CreateMap<VehicleDTO, Vehicle>();
+            CreateMap<Vehicle, VehicleDTO>();
         }
     }
 }

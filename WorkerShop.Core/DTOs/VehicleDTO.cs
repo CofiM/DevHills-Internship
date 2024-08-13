@@ -25,6 +25,5 @@ namespace WorkerShop.Core.DTOs
         [Required, Range(1, 9999)]
         public int Power { get; set; }
 
-        public ClientDTO Client { get; set; }
     }
 }

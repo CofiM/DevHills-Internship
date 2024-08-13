@@ -42,6 +42,6 @@ namespace WorkerShop.Core.DTOs
         [EmailAddress]
         public string Email { get; set; }
 
-        public List<VehicleDTO> Vehicles { get; set; }
+        public virtual List<VehicleDTO> Vehicles { get; set; }
     }
 }
